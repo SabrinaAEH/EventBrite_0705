@@ -69,3 +69,7 @@ end
 gem 'faker'
 
 gem 'table_print'
+
+gem "letter_opener", group: :development
+
+gem 'dotenv-rails'
