@@ -1,0 +1,69 @@
+<!-- message flash si creation event not ok -->
+<% if flash[:error].present? %>
+    <div class="alert alert-danger" role="alert">
+    <%= flash[:error] %>
+    </div>
+<% end %>     
+
+<!-- app/views/events/new.html.erb -->
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title">Créer un nouvel événement</h1>
+
+          <%= form_with(model: @event, local: true) do |form| %>
+            <% if @event.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+                <ul>
+                <% @event.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="form-group">
+              <%= form.label :start_date, class: "form-label" %>
+              <%= form.datetime_local_field :start_date, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :duration, class: "form-label" %>
+              <%= form.number_field :duration, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :title, class: "form-label" %>
+              <%= form.text_field :title, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :description, class: "form-label" %>
+              <%= form.text_area :description, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :price, class: "form-label" %>
+              <%= form.number_field :price, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :location, class: "form-label" %>
+              <%= form.text_field :location, class: "form-control" %>
+            </div>
+
+            <div class="actions">
+              <%= form.submit "Créer l'événement", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+
+          <%= link_to "Retour", events_path, class: "btn btn-secondary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

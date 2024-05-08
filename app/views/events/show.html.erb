@@ -15,3 +15,16 @@
     </div>
   </div>
 </div>
+
+<% if user_signed_in? && !current_user.admin? && !@event.participants.include?(current_user) %>
+  <%= form_tag('/attendances', id: 'payment-form') do %>
+    <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+      data-amount="<%= (@event.price * 100).to_i %>"
+      data-name="Mon application"
+      data-description="Paiement pour <%= @event.title %>"
+      data-locale="auto">
+    </script>
+  <% end %>
+<% end %>
