@@ -2,10 +2,16 @@ class AttendancesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_event
 
+    def index
+        id = params[:event_id]
+        @event = Event.find(id)
+    end
+
+
   def new
     @attendance = Attendance.new
     # Assurez-vous que l'utilisateur n'est pas déjà participant ou administrateur de l'événement
-    if current_user == @event.admin || @event.participants.include?(current_user)
+    if current_user == @event.user || @event.participants.include?(current_user)
       flash[:error] = "Vous êtes déjà inscrit à cet événement."
       redirect_to @event
     end

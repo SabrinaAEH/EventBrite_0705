@@ -13,18 +13,26 @@
     <div class="card-body">
       <%= link_to "Retour", events_path, class: "btn btn-primary" %>
     </div>
+    <div class="card-body">
+      <% if user_signed_in? %>
+        <div class="btn-group" role="group">
+          <div class="mr-2">
+          <a href="/events/<%=@event.id%>/attendances" class="btn btn-primary">Voir les participants</a>
+          </div>
+          <% if !@event.participants.include?(current_user) %>
+            <%= form_tag('/attendances', id: 'payment-form') do %>
+              <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-amount="<%= (@event.price * 100).to_i %>"
+                data-name="Mon application"
+                data-description="Paiement pour <%= @event.title %> "
+                data-locale="auto">
+              </script>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
-
-<% if user_signed_in? && !@event.participants.include?(current_user) %>
-  <%= form_tag('/attendances', id: 'payment-form') do %>
-    <script
-      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-      data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-      data-amount="<%= (@event.price * 100).to_i %>"
-      data-name="Mon application"
-      data-description="Paiement pour <%= @event.title %>"
-      data-locale="auto">
-    </script>
-  <% end %>
-<% end %>

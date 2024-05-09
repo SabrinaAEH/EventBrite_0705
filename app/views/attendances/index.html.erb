@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Participants de l'événement</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <main>
+    <div class="container mt-5">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="card-title">Participants de l'événement</h5>
+        </div>
+        <div class="card-body">
+          <% if flash[:error] %>
+            <div class="alert alert-danger" role="alert">
+              <%= flash[:error] %>
+            </div>
+          <% elsif flash[:success] %>
+            <div class="alert alert-success" role="alert">
+              <%= flash[:success] %>
+            </div>
+          <% end %>
+          <div class="price">
+            <%= @event.participants.count %>
+          </div>
+          <% if @event.participants.any? %>
+            <% @event.participants.each do |participant| %>
+              <p class="color_font"><%= participant.first_name %> <%= participant.last_name %></p>
+            <% end %>
+          <% else %>
+            <p>Il n'y a pas de participant pour le moment.</p>
+          <% end %>
+          <div class="btn btn-primary text-white"><%= link_to "Retour", event_path(@event.id) %></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
