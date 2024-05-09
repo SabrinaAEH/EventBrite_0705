@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<% if user_signed_in? && !current_user.admin? && !@event.participants.include?(current_user) %>
+<% if user_signed_in? && !@event.participants.include?(current_user) %>
   <%= form_tag('/attendances', id: 'payment-form') do %>
     <script
       src="https://checkout.stripe.com/checkout.js" class="stripe-button"

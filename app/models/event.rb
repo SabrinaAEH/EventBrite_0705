@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
 
-  belongs_to :admin, class_name: "User", foreign_key: "admin_id"
+  belongs_to :user
 
   validates :start_date, presence: true
   validates :duration, presence: true

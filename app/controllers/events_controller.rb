@@ -14,11 +14,12 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     @event = current_user.events.build(event_params)
+    @event.save
     if @event.save
       flash[:success] = "évènement créé avec succès !"
       redirect_to root_path
     else
-      flash.now[:error] = "Un ou plusieurs erreurs ont été détectées : #{@event.errors.full_messages.join(" , ")}"
+      flash.now[:error] = "Une ou plusieurs erreurs ont été détectées : #{@event.errors.full_messages.join(" , ")}"
       redirect_to new_event_path
     end
   end
@@ -26,6 +27,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location)
+    params.require(:event).permit(:user_id, :start_date, :duration, :title, :description, :price, :location)
   end
-end
+
+  end
