@@ -9,7 +9,7 @@ class Attendance < ApplicationRecord
   private
 
   def send_participation_email
-    ParticipationMailer.participation_email(self.event.user).deliver_now
+    ParticipationMailer.participation_email(event.user, user).deliver_now
   end
 
 end

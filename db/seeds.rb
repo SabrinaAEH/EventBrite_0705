@@ -1,5 +1,7 @@
 require 'faker'
 
+# Supprimer les enregistrements existants pour éviter les doublons
+Attendance.destroy_all
 Event.destroy_all
 User.destroy_all
 
@@ -36,7 +38,16 @@ users.each do |user|
       location: Faker::Address.city,
       user: user # Utilisateur associé à l'événement
     )
+
+    # Créer une ou plusieurs "Attendance" pour cet événement
+    rand(1..5).times do
+      Attendance.create!(
+        user: users.sample, # Utilisateur aléatoire
+        event: event,
+        stripe_customer_id: Faker::Alphanumeric.alpha(number: 10) # ID factice pour Stripe
+      )
+    end
   end
 end
 
-puts "utilisateurs, events, & participations ont été créés avec succès."
+puts "Users, Events, & Attendances all good!"

@@ -9,7 +9,7 @@
   <main>
     <div class="container mt-5">
       <div class="card">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-dark text-white">
           <h5 class="card-title">Participants de l'événement</h5>
         </div>
         <div class="card-body">
@@ -23,7 +23,7 @@
             </div>
           <% end %>
           <div class="price">
-            <%= @event.participants.count %>
+            <p> Il y a  <%= @event.participants.count %> participants à cet évènement :  </p>
           </div>
           <% if @event.participants.any? %>
             <% @event.participants.each do |participant| %>
@@ -32,7 +32,9 @@
           <% else %>
             <p>Il n'y a pas de participant pour le moment.</p>
           <% end %>
-          <div class="btn btn-primary text-white"><%= link_to "Retour", event_path(@event.id) %></div>
+          <div class="card-body">
+          <%= link_to "Retour", event_path(@event.id), class: "btn btn-primary" %>
+          </div>
         </div>
       </div>
     </div>
